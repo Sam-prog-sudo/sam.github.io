@@ -148,7 +148,7 @@ class Blockchain:
         if parsed_url.scheme == 'http':
             self.nodes.add(parsed_url.netloc)
         else:
-            print(f"Ladresse {parsed_url} n\'est pas valide")
+            print(f"Ladresse {parsed_url.netloc} n\'est pas valide.")
 
     def valid_chain(self, chain):
         """
