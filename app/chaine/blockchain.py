@@ -145,7 +145,10 @@ class Blockchain:
         :type address: <str>
         """
         parsed_url = urlparse(address)
-        self.nodes.add(parsed_url.netloc)
+        if parsed_url.scheme == 'http':
+            self.nodes.add(parsed_url.netloc)
+        else:
+            print(f"Ladresse {parsed_url} n\'est pas valide")
 
     def valid_chain(self, chain):
         """
