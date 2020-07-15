@@ -1,39 +1,34 @@
-# import pytest
+import pytest
 
-# from app.chaine.blockchain import Blockchain
-
-
+from app.chaine.blockchain import Blockchain
 
 
-# @pytest.fixture
-# def valid_transaction(sender='a', recipient='b', amount=1):
-#     {
-#         'sender': sender,
-#         'recipient': recipient,
-#         'amount': amount
-#     }
+@pytest.fixture
+def one_transaction():
+    bc = Blockchain()
+    bc.new_transaction('a', 'b', 1)
 
 
-# class Testransactions(TestBlockchain):
+def test_create_transaction():
+    bc = Blockchain()
+    bc.new_transaction('a', 'b', 1)
+    transaction = bc.current_transactions[-1]
 
-#     def test_create_transaction(self):
-#         self.create_transaction()
+    assert transaction
+    assert transaction['sender'] == 'a'
+    assert transaction['recipient'] == 'b'
+    assert transaction['amount'] == 1
 
-#         transaction = self.blockchain.current_transactions[-1]
 
-#         assert transaction
-#         assert transaction['sender'] == 'a'
-#         assert transaction['recipient'] == 'b'
-#         assert transaction['amount'] == 1
+def test_resets_current_transactions_when_mined():
+    bc = Blockchain()
+    bc.new_transaction('a', 'b', 1)
 
-#     def test_block_resets_transactions(self):
-#         self.create_transaction()
+    initial_length = len(bc.current_transactions)
 
-#         initial_length = len(self.blockchain.current_transactions)
+    bc.new_block(123, 'abc')
 
-#         self.create_block()
+    current_length = len(bc.current_transactions)
 
-#         current_length = len(self.blockchain.current_transactions)
-
-#         assert initial_length == 1
-#         assert current_length == 0
+    assert initial_length == 1
+    assert current_length == 0
