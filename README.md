@@ -68,26 +68,18 @@ https://github.com/Sam-prog-sudo/Chain-of-Fools/archive/master.zip
 ----
 ## Utilisation
 Lancer un Shell pour la création de nodes puis, lancer Postman pour l'envoie et le retour de requêtes.  
-### Lancer l'application  
-A l'aide d'un shell, lancer la commande:
-```shell
-python3 app/main.py
-```
-**ou sous windows**
-```shell
-py app/main.py
-```
+
 ### Création de node
 Commencer par démarrer au moins un serveur (node):  
 > Par défaut, le numéro de port est 5000  
 ```shell
-pipenv run python Block.py
+py python app/main.py
 ```
 ```shell
-pipenv run python blockchain.py -p 5001
+py app/main.py -p 5001
 ```
 ```shell
-pipenv run python blockchain.py --port 5002
+py app/main.py --port 5002
 ```
 ### Miner un block
 Pour miner un nouveau block, il faut trouver la nouvelle preuve de travail.
@@ -118,7 +110,7 @@ En suivant la nomenclature du format JSON, ajouter dans le `Body`de la requête.
 >NB: il s'agit d'une liste de node à rajouter.  
 
 Pour enregistrer un nouveau node sur le réseau, il faut envoyer la requête `POST` à l'adresse  
-`http://0.0.0.0:[numéro-de-port]/nodes/register`.  
+`http://localhost:[numéro-de-port]/nodes/register`.  
 
 ### Consensus de la blockchain
 >Dans le cas où il y aurait plusieurs nodes, cette requête permet d'assurer la validité de la chaine,  
