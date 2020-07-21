@@ -15,7 +15,7 @@ class Blockchain:
         self.current_transactions = []
         # créer le premier block
         self.new_block(proof=1989, previous_hash=1)
-        # créer une liste de nodes
+        # créer un set de nodes -> idempotent
         self.nodes = set()
 
     @property
@@ -205,10 +205,10 @@ class Blockchain:
         new_chain = None
         max_length = len(self.chain)
 
-        for node in neighbours:
-            for _ in range (chances):
+        for un_node in neighbours:
+            for _ in range(chances):
                 try:
-                    response = requests.get(f'http://{node}/chain_of_fools')
+                    response = requests.get(f'http://{un_node}/chain_of_fools')
                 except requests.exceptions.RequestException as oups:
                     print(oups, ' Retrying ...')
                     continue
