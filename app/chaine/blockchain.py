@@ -15,7 +15,7 @@ class Blockchain:
         self.current_transactions = []
         # créer le premier block
         self.new_block(proof=1989, previous_hash=1)
-        # créer une liste de nodes
+        # créer un set de nodes -> idempotent
         self.nodes = set()
 
     @property
@@ -46,8 +46,8 @@ class Blockchain:
         :return: True si les 4 derniers chiffres sont '0000', sinon False.
         :rtype: <bool>
         """
-        guess = f'{last_proof}{proof}'.encode()
-        guess_hash = sha256(guess).hexdigest()
+        guess_bytes = f'{last_proof}{proof}'.encode()
+        guess_hash = sha256(guess_bytes).hexdigest()
         return guess_hash[:4] == "0000"
 
     def proof_of_work(self, last_block):
@@ -87,8 +87,8 @@ class Blockchain:
         :return: hach
         :rtype: <str>
         """
-        block_string = json.dumps(block, sort_keys=True).encode()
-        return sha256(block_string).hexdigest()
+        block_bytes = json.dumps(block, sort_keys=True).encode()
+        return sha256(block_bytes).hexdigest()
 
     def new_block(self, proof, previous_hash=None,):
         """
@@ -145,7 +145,10 @@ class Blockchain:
         :type address: <str>
         """
         parsed_url = urlparse(address)
-        self.nodes.add(parsed_url.netloc)
+        if parsed_url.scheme == 'http':
+            self.nodes.add(parsed_url.netloc)
+        else:
+            print(f"Ladresse {parsed_url.netloc} n\'est pas valide.")
 
     def valid_chain(self, chain):
         """
@@ -205,10 +208,10 @@ class Blockchain:
         new_chain = None
         max_length = len(self.chain)
 
-        for node in neighbours:
-            for _ in range (chances):
+        for un_node in neighbours:
+            for _ in range(chances):
                 try:
-                    response = requests.get(f'http://{node}/chain_of_fools')
+                    response = requests.get(f'http://{un_node}/chain_of_fools')
                 except requests.exceptions.RequestException as oups:
                     print(oups, ' Retrying ...')
                     continue

@@ -142,7 +142,9 @@ Cette liste est non-exhaustive:
 - Améliorer la sécurité des nodes (une vraie passoire...).  
 - Obtenir certaines informations de la blockchain (qui a fait quelle transaction, et quand; combien de block ont été miné; etc.)  
 - Créer un wallet  
+- (Ajouter une fonction qui vérifie un block, une fois qu'il est miné)  
 - Créer un interface graphique (legos qui s'imbriquent ?)  
+- Traduire la docstring en anglais et la mettre en format Napoléon.  
 
 ## FAQ
 

@@ -3,14 +3,14 @@ from uuid import uuid4
 
 from flask import Flask, jsonify, request
 
-from chaine import blockchain
+from app.chaine.blockchain import Blockchain
 
 app = Flask(__name__)
 # Générer une adresse unique pour ce nœud
 # uuid4 est globalement plus aléatoire/unique que uuid1
 node_identifier = str(uuid4()).replace('-', '')
 # Instantie la Blockchain
-blockchain = blockchain.Blockchain()
+blockchain = Blockchain()
 
 
 @app.route('/mine', methods=['GET'])
@@ -72,11 +72,22 @@ def new_transaction():
     if not all(k in valeurs for k in demande):
         return 'Valeurs manquantes', 400
 
-    index = blockchain.new_transaction(
-                valeurs['sender'],
-                valeurs['recipient'],
-                valeurs['amount'],
+    t1 = all(
+        isinstance(s, str) for s in [
+            valeurs['sender'],
+            valeurs['recipient']
+            ]
+        )
+    t2 = isinstance(valeurs['amount'], int)
+
+    if t1 and t2:
+        index = blockchain.new_transaction(
+            valeurs['sender'],
+            valeurs['recipient'],
+            valeurs['amount'],
             )
+    else:
+        return 'Valeurs érronés', 400
 
     reponse = {
         'message': f'Ajout d\'une nouvelle transaction au block {index}'
