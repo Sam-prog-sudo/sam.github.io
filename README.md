@@ -130,7 +130,7 @@ Cette liste est non-exhaustive:
 - Améliorer l'algorithme de travail.  
 - Améliorer l'algorithme de hashage.  
 - Permettre une saugarde physique de la blockchain.  
-- Stocker d'autres informations sur la blockchain (hors cryptomonnaie).  
+- Stocker d'autres informations sur la blockchain (hors cryptomonnaie, IoT).  
 - Améliorer la sécurité des nodes (une vraie passoire...).  
 - Obtenir certaines informations de la blockchain (qui a fait quelle transaction, et quand; combien de block ont été miné; etc.)  
 - Créer un wallet  
